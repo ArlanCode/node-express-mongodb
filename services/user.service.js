@@ -20,19 +20,28 @@ class UserService {
     }
   }
 
-  async getUserById(userId) {
+  async getUserById(userId, checkExistence = false) {
     try {
       const user = await User.findById(userId);
-      return user;
+      if (checkExistence) {
+        return !!user; // Retorna true se o usuário existe, false se não existe
+      } else {
+        return user || null; // Retorna o usuário ou null se não encontrado
+      }
     } catch (error) {
-      throw error;
+      return null; // Retorna null em caso de erro
     }
   }
 
   async updateUser(userId, userData) {
     try {
-      const user = await User.findByIdAndUpdate(userId, userData, { new: true });
-      return user;
+      const doesExist = await this.getUserById(userId, true);
+      if (doesExist) {
+        const user = await User.findByIdAndUpdate(userId, userData, { new: true });
+        return user;
+      } else {
+        return null;
+      }
     } catch (error) {
       throw error;
     }
@@ -40,21 +49,18 @@ class UserService {
 
   async deleteUser(userId) {
     try {
-      const user = await User.findByIdAndDelete(userId);
-      return user;
+      const doesExist = await this.getUserById(userId, true);
+      if (doesExist) {
+        const user = await User.findByIdAndDelete(userId);
+        return user;
+      } else {
+        return null;
+      }
     } catch (error) {
       throw error;
     }
   }
 
-  async doesUserExist(userId) {
-    try {
-      const user = await User.findById(userId);
-      return !!user;
-    } catch (error) {
-      throw error;
-    }
-  }
 }
 
 module.exports = new UserService();

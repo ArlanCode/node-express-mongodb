@@ -36,9 +36,8 @@ class UserController {
   async updateUser(req, res) {
     const userId = req.params.id;
     try {
-      const doesExist = await userService.doesUserExist(userId);
-      if (doesExist) {
-        const updatedUser = await userService.updateUser(userId, req.body);
+      const updatedUser = await userService.updateUser(userId, req.body);
+      if (updatedUser) {
         res.status(200).send(updatedUser);
       } else {
         res.status(404).send({ message: 'Usuário não encontrado' });
@@ -51,9 +50,8 @@ class UserController {
   async deleteUser(req, res) {
     const userId = req.params.id;
     try {
-      const doesExist = await userService.doesUserExist(userId);
-      if (doesExist) {
-        const deletedUser = await userService.deleteUser(userId);
+      const deletedUser = await userService.deleteUser(userId);
+      if (deletedUser) {
         res.status(200).send(deletedUser);
       } else {
         res.status(404).send({ message: 'Usuário não encontrado' });
