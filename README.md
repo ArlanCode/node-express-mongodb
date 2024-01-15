@@ -38,9 +38,13 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 ### Endpoints da API
 
 .POST /api/usuarios: Criar um novo usuário.
+
 .GET /api/usuarios: Obter todos os usuários.
+
 .GET /api/usuarios/:id: Obter um usuário por ID.
+
 .PUT /api/usuarios/:id: Atualizar um usuário por ID.
+
 .DELETE /api/usuarios/:id: Excluir um usuário por ID.
 
 ### Observação
